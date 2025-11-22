@@ -49,18 +49,7 @@ void clearwinsock()
 #endif
 }
 
-void valida_tipo(char tipo)
-{
-	if(tipo!='t' && tipo!='h' && tipo!='w' && tipo!='p')
-	{
-		response.status=2;
-	}else
-	{
-		response.status=0;
-	}
-}
-
-void valida_citta(char* citta)
+void valida(char tipo,char* citta )
 {
 	int flag=1;
 	for (int i=0;i<10;i++)
@@ -73,15 +62,19 @@ void valida_citta(char* citta)
 	if(flag==1)
 	{
 		response.status=1;
+	}else if(tipo!='t' && tipo!='h' && tipo!='w' && tipo!='p')
+	{
+		response.status=2;
 	}else
 	{
 		response.status=0;
 	}
+
 }
+
 
 float get_temperature(void)
 {
-	srand(time(NULL));
 	float min_value=-10.0;
 	float max_value=40.0;
 	float temp = rand() % (max_value - min_value + 1)+ min_value;
@@ -89,7 +82,6 @@ float get_temperature(void)
 }
 float get_humidity(void)
 {
-	srand(time(NULL));
 	float min_value=20.0;
 	float max_value=100.0;
 	float hum = rand() % (max_value - min_value + 1)+ min_value;
@@ -97,7 +89,6 @@ float get_humidity(void)
 }
 float get_wind(void)
 {
-	srand(time(NULL));
 	float min_value=0.0;
 	float max_value=100.0;
 	float wind = rand() % (max_value - min_value + 1)+ min_value;
@@ -105,7 +96,6 @@ float get_wind(void)
 }
 float get_pressure(void)
 {
-	srand(time(NULL));
 	float min_value=950.0;
 	float max_value=1050.0;
 	float pres = rand() % (max_value - min_value + 1)+ min_value;
@@ -199,12 +189,11 @@ int main(int argc, char *argv[])
 
 		printf("Richiesta '%c %s' dal client ip %s\n",request.type, request.city, sad.sin_addr.s_addr);
 
-		valida_tipo(request.type);
-
-		valida_citta(request.city);
+		valida(request.type,request.city);
 
 		if(response.status==0)
 		{
+			srand(time(NULL));
 			switch (request.type)
 			{
 			case 't':
