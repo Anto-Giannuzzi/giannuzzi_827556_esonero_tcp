@@ -9,8 +9,9 @@
 #define PROTOCOL_H_
 
 // Shared application parameters
-#define SERVER_PORT 27015  // Server port (change if needed)
+#define SERVER_PORT 56700  // Server port (change if needed)
 #define BUFFER_SIZE 512    // Buffer size for messages
+#define DEFAULT_IP "127.0.0.1"
 
 typedef struct {
     char type;        // Weather data type: 't', 'h', 'w', 'p'
@@ -23,12 +24,7 @@ typedef struct {
     float value;          // Weather data value
 } weather_response_t;
 
-// Function prototypes
-// Add here the signatures of the functions implemented by students
-
-/*
- * Example function to implement:
- * int connect_to_server(const char* server_address);
- */
+void errorhandler(char *errorMessage);
+void clearwinsock();
 
 #endif /* PROTOCOL_H_ */
